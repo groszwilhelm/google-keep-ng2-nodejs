@@ -1,30 +1,20 @@
 import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+
+import { Note } from '../components/notes/note/note.model';
 
 @Injectable()
 export class NotesService {
+    private url = 'api/notes';
 
-    constructor() { }
+    constructor(private http: Http) { }
     
-    readAll() {
-        return [
-            {
-                id: 0,
-                title: 'This is data from service 1',
-                description: 'Some description goes here',
-                color: '#ffffff'
-            },
-            {
-                id: 1,
-                title: 'This is data from service 2',
-                description: 'Some description goes here',
-                color: '#ffffff'
-            },
-            {
-                id: 2,
-                title: 'This is data from service 3',
-                description: 'Some description goes here',
-                color: '#ffffff'
-            },
-        ]
+    readAll(): Observable<Array<Note>> {
+        return this.http.get(this.url)
+            .map((response: Response) => response.json());
     }
 }
