@@ -1,5 +1,5 @@
 <div>
-    <div *ngFor="let note of notesArray" class="notes-wrapper">
-        <note [note]="note"></note>
+    <div class="notes-wrapper">
+        <note [note]="note" *ngFor="let note of notesArray"></note>
     </div>
 </div>

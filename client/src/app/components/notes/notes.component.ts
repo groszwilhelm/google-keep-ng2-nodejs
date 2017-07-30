@@ -15,7 +15,7 @@ export class NotesComponent implements OnInit {
     constructor(private notesService: NotesService) { }
 
     ngOnInit() { 
-        this.notesService.readAll()
+        this.notesService.read()
             .subscribe((notes: Array<Note>) => {
                 this.notesArray = notes;
             });
