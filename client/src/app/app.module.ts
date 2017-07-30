@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { NoteModule } from './components/notes/notes.module';
+import { NoteFormModule } from './components/note-form/note-form.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { NoteModule } from './components/notes/notes.module';
     BrowserModule,
     FormsModule,
     HttpModule,
-    NoteModule
+    NoteModule,
+    NoteFormModule
   ],
   providers: [],
   bootstrap: [AppComponent]
