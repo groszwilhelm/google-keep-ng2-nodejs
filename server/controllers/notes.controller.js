@@ -1,7 +1,7 @@
 const express = require("express");
 const Notes = require('../models/notes.model');
 const apiRouter = require('./api.controller').router;
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 let socketIo;
 
 function init(...args) {
@@ -29,11 +29,16 @@ function initSocket(io) {
 }
 
 function handleRequest(method, param, res) {
-    Notes[method].call(Notes, param)
-        .then(result => {
-            filterResultStatus(res, result);
-            method === 'add' ? socketIo.sockets.emit('addNotes', result.data) : '';
-        });
+    if (Notes[method]) {
+        Notes[method].call(Notes, param)
+            .then(result => {
+                filterResultStatus(res, result);
+                method === 'add' ? socketIo.sockets.emit('addNotes', result.data) : '';
+            });
+    } else {
+        handleError(res, 500, { message: 'Server error!' });
+        console.error('Method' + method + 'does not exist on Notes');
+    }
 }
 
 function filterResultStatus(res, result) {
@@ -50,7 +55,7 @@ function filterResultStatus(res, result) {
         case 500: 
             handleError(res, result.status, result.data);
     }
-} 
+}
 
 router.post('/', function(req, res) {
     handleRequest('add', req.body, res);
@@ -62,7 +67,8 @@ router.get('/', function(req, res) {
 
 router.delete('/:id', function(req, res) {
     handleRequest('remove', req.params.id, res);
-})
+});
+
 module.exports = {
     init: init,
     router: router
