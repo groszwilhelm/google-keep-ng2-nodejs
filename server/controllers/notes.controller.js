@@ -33,7 +33,9 @@ function handleRequest(method, param, res) {
         Notes[method].call(Notes, param)
             .then(result => {
                 filterResultStatus(res, result);
-                method === 'add' ? socketIo.sockets.emit('addNotes', result.data) : '';
+                if (method === 'add') {
+                    socketEmitNewNote(result.data);
+                }
             });
     } else {
         handleError(res, 500, { message: 'Server error!' });
@@ -54,6 +56,12 @@ function filterResultStatus(res, result) {
             break;
         case 500: 
             handleError(res, result.status, result.data);
+    }
+}
+
+function socketEmitNewNote(note) {
+    if (Object.keys(note).length > 0) {
+        socketIo.sockets.emit('addNotes', note);
     }
 }
 
