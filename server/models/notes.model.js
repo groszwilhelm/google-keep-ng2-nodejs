@@ -1,5 +1,5 @@
 const mongoose = require('./mongoose.connection');
-const NoteSchema = require('./notes.schema');
+const NoteModel = require('./notes.schema');
 
 const Note = function(id, title, description, color) {
     this.id = id;
@@ -7,8 +7,6 @@ const Note = function(id, title, description, color) {
     this.description = description;
     this.color = color;
 }
-
-const NoteModel = mongoose.model('Note', NoteSchema);
 
 function read() {
     return new Promise(function(resolve, reject) {
@@ -44,9 +42,10 @@ function create(data) {
 
             noteData.save(function(err, doc) {
                 if (err) {
-                    resolve({ status: 500, data: { message: err } });
+                    console.error(err);
+                    resolve({ status: 500, data: { message: 'All fields must be filled in' } });
                 } else {
-                    resolve({ status: 200, data: new Note(doc._id, row.title, doc.description, doc.color) });
+                    resolve({ status: 200, data: new Note(doc._id, doc.title, doc.description, doc.color) });
                 }
             });
         } catch(e) {

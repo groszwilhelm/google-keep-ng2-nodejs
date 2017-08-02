@@ -33,7 +33,7 @@ function handleRequest(method, param, res) {
         Notes[method].call(Notes, param)
             .then(result => {
                 filterResultStatus(res, result);
-                if (method === 'add') {
+                if (method === 'add' && result.status === 200) {
                     socketEmitNewNote(result.data);
                 }
             });
