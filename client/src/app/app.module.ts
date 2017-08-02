@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { NoteModule } from './components/notes/notes.module';
 import { NoteFormModule } from './components/note-form/note-form.module';
+import { NotificationsModule } from 'app/notifications/notifications.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { NoteFormModule } from './components/note-form/note-form.module';
     FormsModule,
     HttpModule,
     NoteModule,
-    NoteFormModule
+    NoteFormModule,
+    NotificationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

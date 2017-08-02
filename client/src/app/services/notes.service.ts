@@ -4,6 +4,7 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 
 import * as io from 'socket.io-client';
 
@@ -23,7 +24,10 @@ export class NotesService {
 
 	public add(note: Note): Observable<Note> {
 		return this.http.post(this.config.api + this.endpoint, note)
-			.map((response: Response) => response.json());
+			.map((response: Response) => response.json())
+			.catch((error: Response) => {
+				return Observable.throw(error.json());
+			});
 	}
 
 	public read(): Observable<Array<Note>> {

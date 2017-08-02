@@ -4,10 +4,12 @@ import { CommonModule } from '@angular/common';
 import { NoteComponent } from './note/note.component';
 import { NotesComponent } from './notes.component';
 import { NotesService } from '../../services/notes.service';
+import { NotificationsModule } from "app/notifications/notifications.module";
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        NotificationsModule
     ],
     exports: [
         NoteComponent,
