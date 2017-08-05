@@ -1,20 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/delay'; 
+import 'rxjs/add/observable/of'; 
 
 import { NotificationsService } from './notifications.service';
 import { NotificationProperties, NotificationCssClasses, NotificationTypes } from './notifications.interface';
 
 @Component({
     selector: 'notifications',
-    templateUrl: 'notifications.component.html'
+    templateUrl: 'notifications.component.html',
+    styleUrls: ['notifications.component.css']
 })
 
 export class NotificationsComponent implements OnInit {
     public showNotifications: boolean = false;
     public notificationMessage: string;
     public cssClass;
+    private observable$;
 
     constructor(private notificationsService: NotificationsService) { }
 
@@ -38,9 +41,9 @@ export class NotificationsComponent implements OnInit {
     }
 
     private closeOnTimeout(time) {
-        setTimeout(() => {
-            this.handleClose();
-        }, time)
+        this.observable$ = Observable.of(null)
+            .delay(time)
+            .subscribe(()=> this.handleClose());
     }
 
     private applyCss(propertyTypes) {
@@ -62,5 +65,10 @@ export class NotificationsComponent implements OnInit {
 
     private handleClose() {
         this.showNotifications = false;
+        this.observable$.unsubscribe();
+    }
+
+    public close() {
+        this.handleClose();
     }
 }

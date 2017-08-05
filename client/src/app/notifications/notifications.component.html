@@ -1,3 +1,6 @@
-<div *ngIf="showNotifications" [class]="cssClass" style="position: fixed; width: 100%; text-align: center;">
-    {{ notificationMessage }}
+<div *ngIf="showNotifications" [class]="cssClass">
+    <span style="vertical-align: middle">
+        {{ notificationMessage }}
+    </span>
+    <i class="material-icons notification-icons notification-icons-close" (click)="close()" style="cursor: pointer">close</i>
 </div>

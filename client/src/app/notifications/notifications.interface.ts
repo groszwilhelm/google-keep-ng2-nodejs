@@ -10,7 +10,7 @@ export class NotificationTypes {
 }
 
 export class NotificationCssClasses {
-    public SUCCESS = 'alert alert-success';
-    public ERROR = 'alert alert-danger';
-    public INFO = 'alert alert-info';
+    public SUCCESS = 'alert alert-success alert-notifications';
+    public ERROR = 'alert alert-danger alert-notifications';
+    public INFO = 'alert alert-info alert-notifications';
 }
