@@ -19,7 +19,8 @@ export class NotesService {
 	private socket;
 
 	constructor(private http: Http) {
-		this.socket = io(this.config.host);
+		// this.socket = io(this.config.host);
+		this.socket = io.connect();
 	}
 
 	public add(note: Note): Observable<Note> {

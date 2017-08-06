@@ -1,0 +1,29 @@
+version: '2'
+services:
+
+  gkapp:
+    build:
+      context: '../server'
+      dockerfile: Dockerfile
+    image: gkapp_image
+    container_name: gkapp
+    hostname: gkapp
+    ports:
+      - 8080:3000
+    volumes:
+      - ../../:/opt/gkapp
+    command: tail -f /dev/null
+    networks:
+      - gkapp
+
+  gkdb:
+    image: mongo
+    container_name: gkdb
+    hostname: gkdb
+    ports:
+      - 27017:27017
+    networks:
+      - gkapp
+
+networks:
+  gkapp:

@@ -22,7 +22,6 @@ export class NotificationsComponent implements OnInit {
     constructor(private notificationsService: NotificationsService) { }
 
     ngOnInit() { 
-        console.log('init notification listerners');
         this.notificationsService.getOpenObservable()
             .subscribe((properties: NotificationProperties) => {
                 this.handleOpen(properties);

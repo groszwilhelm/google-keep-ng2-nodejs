@@ -42,7 +42,7 @@ function create(data) {
 
             noteData.save(function(err, doc) {
                 if (err) {
-                    console.error(err);
+                    console.error(JSON.stringify(err));
                     resolve({ status: 500, data: { message: 'All fields must be filled in' } });
                 } else {
                     resolve({ status: 200, data: new Note(doc._id, doc.title, doc.description, doc.color) });

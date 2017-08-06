@@ -27,7 +27,7 @@ export class NoteFormComponent implements OnInit {
 
     private saveNote(formRef: NgForm, note: Note) {
         this.isToggled = false;
-        note.color = this.color.red;
+        note.color = this.color.green;
         
         this.noteService.add(note)
             .subscribe(note => {
