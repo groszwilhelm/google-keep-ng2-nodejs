@@ -1,0 +1,32 @@
+ul {
+    list-style-type: none;
+}
+.color-palette-container {
+    position: absolute; 
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    border-radius: 10px;
+    padding-left: 12px;
+    width: 40%;
+    height: 80px;
+    top: 60px;
+    left: 30px;
+    background-color: rgb(250, 250, 250);
+    box-shadow: 1px 1px 1px rgba(150,150,150,.85);
+}
+
+.color-palette-color {
+    display: block;
+    float: left;
+    width: 28px;
+    height: 28px;
+    margin: 3px;
+    border-radius: 50px;
+    box-shadow: 1px 1px 1px rgba(150,150,150,.85);
+}
+
+.color-palette-color:hover {
+    cursor: pointer;
+}

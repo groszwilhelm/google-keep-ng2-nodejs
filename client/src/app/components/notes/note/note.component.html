@@ -6,9 +6,9 @@
         {{ note.description }}
     </p>
     <div class="note-area-content-footer">
-        <i class="material-icons item-section-icons">color_lens</i>
+        <i class="material-icons item-section-icons" (click)="toggleColorView()">color_lens</i>
         <i class="material-icons item-section-icons">label</i>
         <i class="material-icons item-section-icons" (click)="deleteNote(note.id)">delete</i>
-        <div class="color-palette"></div>
     </div>
+    <color-palette></color-palette>
 </section>
