@@ -45,7 +45,6 @@ export class NotesService {
 	public delete(id: number): Observable<{ message: string }> {
 		return this.http.delete(this.config.api + this.endpoint + '/' + id)
 			.map((response: Response) => {
-				this.socket.emit('deleteNotes', id);
 				return response.json();
 			});
 	}

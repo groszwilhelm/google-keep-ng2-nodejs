@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { NoteModule } from './components/notes/notes.module';
 import { NoteFormModule } from './components/note-form/note-form.module';
 import { NotificationsModule } from 'app/notifications/notifications.module';
+import { ColorPaletteModule } from './components/color-palette/color-palette.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NotificationsModule } from 'app/notifications/notifications.module';
     HttpModule,
     NoteModule,
     NoteFormModule,
-    NotificationsModule
+    NotificationsModule,
+    ColorPaletteModule
   ],
   providers: [],
   bootstrap: [AppComponent]

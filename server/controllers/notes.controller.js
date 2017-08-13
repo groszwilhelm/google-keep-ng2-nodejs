@@ -11,21 +11,16 @@ function init(...args) {
 
 function handleSuccess(res, status, data) {
     res.status(status).send(data);
-    console.log('Data sent on success, endpoint: /notes ' + status + ' ' + JSON.stringify(data));
+    console.log('Data sent on success, endpoint: /notes ' + status + ' ' + JSON.stringify(data, false, 2));
 }
 
 function handleError(res, status, data) {
     res.status(status).send(data);
-    console.error('Data sent on error, endpoint: /notes ' + status + ' ' + JSON.stringify(data));
+    console.error('Data sent on error, endpoint: /notes ' + status + ' ' + JSON.stringify(data, false, 2));
 }
 
 function initSocket(io) {
     socketIo = io;
-    io.on('connection', function(socket) {
-        socket.on('deleteNotes', function(noteId) {
-            io.sockets.emit('deleteNotes', noteId);
-        });
-    });
 }
 
 function handleRequest(method, param, res) {
@@ -34,7 +29,10 @@ function handleRequest(method, param, res) {
             .then(result => {
                 filterResultStatus(res, result);
                 if (method === 'add' && result.status === 200) {
-                    socketEmitNewNote(result.data);
+                    return socketEmitNewNote(result.data);
+                }
+                if (method === 'remove' && result.status === 200) {
+                    return socketEmitDeletedNoteId(result.data.note);
                 }
             });
     } else {
@@ -62,6 +60,12 @@ function filterResultStatus(res, result) {
 function socketEmitNewNote(note) {
     if (Object.keys(note).length > 0) {
         socketIo.sockets.emit('addNotes', note);
+    }
+}
+
+function socketEmitDeletedNoteId(note) {
+    if (Object.keys(note).length > 0) {
+        socketIo.sockets.emit('deleteNotes', note.id);
     }
 }
 

@@ -57,11 +57,11 @@ function create(data) {
 function remove(id) {
     return new Promise(function(resolve, reject) {
         try {
-            NoteModel.findByIdAndRemove(id, function(err) {
+            NoteModel.findByIdAndRemove(id, function(err, doc) {
                 if (err) {
                     resolve({ status: 500, data: { message: err } });
                 } else {
-                    resolve({ status: 200, data: { message: 'Note was removed' } });
+                    resolve({ status: 200, data: { note: new Note(doc._id, doc.title, doc.description, doc.color), message: 'Note was removed' } });
                 }
             });
         } catch(e) {

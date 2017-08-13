@@ -1,0 +1,3 @@
+<div class="color-palette-container" *ngIf="display">
+    <div *ngFor="let item of color.colorArray" class="color-palette-color" [ngStyle]="{'background': item}" (click)="setColor(item)"></div>
+</div>

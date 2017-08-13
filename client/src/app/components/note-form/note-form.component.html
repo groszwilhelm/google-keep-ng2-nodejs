@@ -2,14 +2,17 @@
     {{ message }}
 </div>
 
-<form class="note-wrapper" #formRef="ngForm" (ngSubmit)="saveNote(formRef, formRef.value.note)">
+<form class="note-wrapper" #formRef="ngForm" (ngSubmit)="saveNote(formRef, formRef.value.note)" [ngStyle]="{'background': selectedColor}">
     <div ngModelGroup="note">
-        <input type="text" placeholder="Title" class="note-title" [class.hidden]="!isToggled" ngModel name="title" autocomplete="off">
-        <input type="text" placeholder="Take a note.." class="note-description" (click)="toggle()" ngModel name="description" autocomplete="off">
+        <input type="text" placeholder="Title" class="note-title" [class.hidden]="!isToggled" ngModel name="title" autocomplete="off" [ngStyle]="{'background': selectedColor}">
+        <input type="text" placeholder="Take a note.." class="note-description" (click)="toggle()" ngModel name="description" autocomplete="off" [ngStyle]="{'background': selectedColor}">
         <div class="item-section" [class.hidden]="!isToggled">
-            <i class="material-icons item-section-icons">color_lens</i>
+            <i class="material-icons item-section-icons" (click)="toggleColorView()">color_lens</i>
             <i class="material-icons item-section-icons">label</i>
-            <button type="submit" class="note-btn">Done</button>
+            <button type="submit" class="note-btn" [ngStyle]="{'background': selectedColor}">Done</button>
+        </div>
+        <div class="color-palette-container" *ngIf="colorToggle">
+            <div *ngFor="let item of colors.colorArray" class="color-palette-color" [ngStyle]="{'background': item}" (click)="setColor(item)"></div>
         </div>
     </div>
 </form>
