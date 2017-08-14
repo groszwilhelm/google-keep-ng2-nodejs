@@ -12,6 +12,12 @@ describe('Notes model', () => {
         connection.init('/test');
     });
 
+    afterEach((done) => {
+        NoteSchema.remove({}, () => {
+            done();
+        });
+    });
+
     it('should have a create method', (done) => {
         NoteModel.should.have.property('add');
         done();
@@ -132,12 +138,6 @@ describe('Notes model', () => {
                 .catch((err) => {
                     done(err);
                 });
-        });
-    });
-
-    afterEach((done) => {
-        NoteSchema.remove({}, () => {
-            done();
         });
     });
 });

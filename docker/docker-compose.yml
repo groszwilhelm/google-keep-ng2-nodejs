@@ -13,10 +13,10 @@ services:
     ports:
       - 8080:3000
     volumes:
-      - ../../:/opt/gkapp
-    command: tail -f /dev/null
+      - ../:/opt/app
     networks:
       - gkapp
+    command: tail -f /dev/null
 
   gkdb:
     image: mongo

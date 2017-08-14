@@ -9,3 +9,6 @@
     - cd server
     - npm install
     - npm run server
+
+## Run tests for server
+    - npm run test
