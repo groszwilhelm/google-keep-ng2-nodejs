@@ -8,6 +8,8 @@ services:
     image: gkapp_image
     container_name: gkapp
     hostname: gkapp
+    env_file:
+      - ./environment/app.env
     ports:
       - 8080:3000
     volumes:
