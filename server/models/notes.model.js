@@ -1,4 +1,3 @@
-const mongoose = require('./mongoose.connection');
 const NoteModel = require('./notes.schema');
 
 const Note = function(id, title, description, color) {
@@ -15,8 +14,8 @@ function read() {
                 if (err) {
                     resolve({ status: 500, data: { message: err } })
                 } else {
-                    if (!notes) {
-                        resolve({ status: 204, data: {} });
+                    if (notes.length === 0) {
+                        resolve({ status: 204, data: [] });
                     } else {
                         let notesArray = [];
                         notes.forEach(function(note) {
@@ -42,7 +41,6 @@ function create(data) {
 
             noteData.save(function(err, doc) {
                 if (err) {
-                    console.error(JSON.stringify(err));
                     resolve({ status: 500, data: { message: 'All fields must be filled in' } });
                 } else {
                     resolve({ status: 200, data: new Note(doc._id, doc.title, doc.description, doc.color) });
@@ -71,6 +69,7 @@ function remove(id) {
 }
 
 module.exports = {
+    Note: Note,
     read: read,
     add: create,
     remove: remove
