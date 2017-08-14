@@ -22,6 +22,8 @@ describe('Notes model', () => {
         done();
     });
 
+    it('should have an update method');
+
     it('should have a delete method', (done) => {
         NoteModel.should.have.property('remove');
         done();
@@ -34,6 +36,8 @@ describe('Notes model', () => {
             NoteModel.add(note)
                 .then((res) => {
                     res.status.should.equal(200);
+                    res.should.be.an('object');
+                    res.should.have.all.keys(['status', 'data']);
                     res.data.should.be.an('object');
                     res.data.should.have.all.keys(Object.keys(note));
                     res.data.title.should.equal(note.title);
@@ -52,6 +56,8 @@ describe('Notes model', () => {
             NoteModel.add(note)
                 .then((res) => {
                     res.status.should.equal(500);
+                    res.should.be.an('object');
+                    res.should.have.all.keys(['status', 'data']);
                     res.data.message.should.be.a('string').that.is.not.empty;
                     done();
                 })
@@ -91,6 +97,8 @@ describe('Notes model', () => {
             NoteModel.read()
                 .then((res) => {
                     res.status.should.equal(204);
+                    res.should.be.an('object');
+                    res.should.have.all.keys(['status', 'data']);
                     res.data.should.be.an('array').that.is.empty;
                     done();
                 })
@@ -115,6 +123,8 @@ describe('Notes model', () => {
             NoteModel.remove(note._id)
                 .then((res) => {
                     res.status.should.be.equal(200);
+                    res.should.be.an('object');
+                    res.should.have.all.keys(['status', 'data']);
                     res.data.should.be.an('object');
                     res.data.message.should.be.a('string').that.is.not.empty;
                     done();
