@@ -1,4 +1,4 @@
-const NoteModel = require('./notes.schema');
+const NoteSchema = require('./notes.schema');
 
 const Note = function(id, title, description, color) {
     this.id = id;
@@ -10,7 +10,7 @@ const Note = function(id, title, description, color) {
 function read() {
     return new Promise(function(resolve, reject) {
         try {
-            NoteModel.find(function(err, notes) {
+            NoteSchema.find(function(err, notes) {
                 if (err) {
                     resolve({ status: 500, data: { message: err } })
                 } else {
@@ -37,7 +37,7 @@ function create(data) {
     return new Promise(function(resolve, reject) {
         try {
             delete note.id;
-            const noteData = new NoteModel(note);
+            const noteData = new NoteSchema(note);
 
             noteData.save(function(err, doc) {
                 if (err) {
@@ -55,7 +55,7 @@ function create(data) {
 function remove(id) {
     return new Promise(function(resolve, reject) {
         try {
-            NoteModel.findByIdAndRemove(id, function(err, doc) {
+            NoteSchema.findByIdAndRemove(id, function(err, doc) {
                 if (err) {
                     resolve({ status: 500, data: { message: err } });
                 } else {
