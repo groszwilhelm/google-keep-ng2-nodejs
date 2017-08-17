@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
@@ -16,6 +17,7 @@ export class NotesService {
 	private endpoint: string = '/notes';
 	private notesArray: Array<Note> = [];
 	private config = new AppConfig;
+	public editNote$ = new Subject<any>();
 	private socket;
 
 	constructor(private http: Http) {
@@ -42,11 +44,23 @@ export class NotesService {
 		});
 	}
 
+	public update(note: Note): Observable<Note> {
+		return this.http.put(this.config.api + this.endpoint + '/' + note.id, note)
+			.map((response: Response) => response.json())
+			.catch((error: Response) => {
+				return Observable.throw(error.json());
+			});
+	}
+
 	public delete(id: number): Observable<{ message: string }> {
 		return this.http.delete(this.config.api + this.endpoint + '/' + id)
 			.map((response: Response) => {
 				return response.json();
 			});
+	}
+
+	public getEditNoteObservable(): Observable<Note> {
+		return  this.editNote$;
 	}
 
 	private handleSockets(observer) {
@@ -59,6 +73,18 @@ export class NotesService {
 			this.notesArray = this.notesArray.filter((note) => {
 				return note.id != id;
 			});
+			return observer.next(this.notesArray);
+		});
+
+		this.socket.on('updateNotes', (data) => {
+			for(let i = 0; i < this.notesArray.length; i++) {
+				if (this.notesArray[i].id === data.id) {
+					this.notesArray[i] = data;
+					console.log(this.notesArray[i], data);
+					break;
+				}
+			}
+			console.log(this.notesArray);
 			return observer.next(this.notesArray);
 		});
 	}

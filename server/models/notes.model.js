@@ -1,3 +1,5 @@
+'use strict';
+
 const NoteSchema = require('./notes.schema');
 
 const Note = function(id, title, description, color) {
@@ -31,8 +33,8 @@ function read() {
     });
 }
 
-function create(data) {
-    const note = new Note(data.id, data.title, data.description, data.color);
+function create(note) {
+    // const note = new Note(note.id, note.title, note.description, note.color);
 
     return new Promise(function(resolve, reject) {
         try {
@@ -44,6 +46,22 @@ function create(data) {
                     resolve({ status: 500, data: { message: 'All fields must be filled in' } });
                 } else {
                     resolve({ status: 200, data: new Note(doc._id, doc.title, doc.description, doc.color) });
+                }
+            });
+        } catch(e) {
+            resolve({ status: 500, data: { message: e } });
+        }
+    });
+}
+
+function update(note) {
+    return new Promise(function(resolve, reject) {
+        try {
+            NoteSchema.findByIdAndUpdate(note.id, note, function(err, doc) {
+                if (err) {
+                    resolve({ status: 500, data: { message: err } });
+                } else {
+                    resolve({ status: 200, data: { note: note, message: 'Note was updated' } });
                 }
             });
         } catch(e) {
@@ -70,7 +88,8 @@ function remove(id) {
 
 module.exports = {
     Note: Note,
-    read: read,
     add: create,
+    read: read,
+    update: update,
     remove: remove
 }

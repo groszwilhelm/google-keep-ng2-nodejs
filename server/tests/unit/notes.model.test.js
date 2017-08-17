@@ -45,7 +45,7 @@ describe('Notes model', () => {
                     res.should.be.an('object');
                     res.should.have.all.keys(['status', 'data']);
                     res.data.should.be.an('object');
-                    res.data.should.have.all.keys(Object.keys(note));
+                    res.data.should.have.all.keys('id', 'title', 'description', 'color');
                     res.data.title.should.equal(note.title);
                     res.data.description.should.equal(note.description);
                     res.data.color.should.equal(note.color);

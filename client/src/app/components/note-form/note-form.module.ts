@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { NoteFormComponent } from './note-form.component';
@@ -12,6 +12,7 @@ import { ColorPaletteModule } from '../color-palette/color-palette.module';
         SharedModule,
         CommonModule,
         FormsModule,
+        ReactiveFormsModule,
         NotificationsModule,
         ColorPaletteModule
     ],

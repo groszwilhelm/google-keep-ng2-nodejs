@@ -34,10 +34,13 @@ function handleRequest(method, param, res) {
                 if (method === 'remove' && result.status === 200) {
                     return socketEmitDeletedNoteId(result.data.note);
                 }
+                if (method === 'update' && result.status === 200) {
+                    return socketEmitUpdatedNote(result.data.note);
+                }
             });
     } else {
         handleError(res, 500, { message: 'Server error!' });
-        console.error('Method' + method + 'does not exist on Notes');
+        console.error('Method: ' + method + ' does not exist on Notes');
     }
 }
 
@@ -69,12 +72,22 @@ function socketEmitDeletedNoteId(note) {
     }
 }
 
+function socketEmitUpdatedNote(note) {
+    if (Object.keys(note).length > 0) {
+        socketIo.sockets.emit('updateNotes', note);
+    }
+}
+
 router.post('/', function(req, res) {
     handleRequest('add', req.body, res);
 });
 
 router.get('/', function(req, res) {
     handleRequest('read', req.body, res);
+});
+
+router.put('/:id', function(req, res) {
+    handleRequest('update', req.body, res);
 });
 
 router.delete('/:id', function(req, res) {

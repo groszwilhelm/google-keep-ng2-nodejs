@@ -19,7 +19,7 @@ export class NoteComponent implements OnInit {
 
     constructor(private notesService: NotesService, private notificationsService: NotificationsService, private colorService: ColorPaletteService) { }
 
-    private deleteNote(id) {
+    private deleteNote(id): void {
         this.notesService.delete(id)
             .subscribe(data => {
                 this.notificationsService.openNotification({
@@ -29,10 +29,14 @@ export class NoteComponent implements OnInit {
             })
     }
 
-    private toggleColorView() {
+    private toggleColorView(): void {
         this.toggle = !this.toggle;
         console.log(this.toggle);
         this.toggle ? this.colorService.open() : this.colorService.close();
+    }
+
+    private editNote(note: Note): void {
+        this.notesService.editNote$.next(note);
     }
 
     ngOnInit() { }
