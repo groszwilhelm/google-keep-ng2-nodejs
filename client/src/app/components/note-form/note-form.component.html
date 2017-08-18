@@ -5,7 +5,7 @@
         <div class="item-section" [class.hidden]="!isToggled">
             <i class="material-icons item-section-icons" (click)="toggleColorView()">color_lens</i>
             <i class="material-icons item-section-icons" (click)="handleFormState()">label</i>
-            <button type="submit" class="note-btn" [ngStyle]="{'background': selectedColor}" #formButton>Save</button>
+            <button type="submit" class="note-btn" [ngStyle]="{'background-color': selectedColor}" #formButton>Save</button>
         </div>
         <div class="color-palette-container" *ngIf="colorToggle">
             <div *ngFor="let item of colors.colorArray" class="color-palette-color" [ngStyle]="{'background': item}" (click)="setColor(item)"></div>

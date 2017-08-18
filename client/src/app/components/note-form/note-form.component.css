@@ -33,8 +33,7 @@
 }
 
 .note-btn:hover {
-    border-radius: 10px;
-    background-color: rgba(150,150,150,.35);
+    box-shadow: 1px 1px 1px;
     cursor: pointer;
 }
 

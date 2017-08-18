@@ -1,7 +1,9 @@
 .alert-notifications {
     position: fixed; 
     height: 70px;
-    width: 100%; 
+    width: 100%;
+    top: 0px;
+    z-index: 20;
     text-align: center;
     font-size: 22px;
     vertical-align: middle;
