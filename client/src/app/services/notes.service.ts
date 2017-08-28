@@ -6,6 +6,9 @@ import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/switchMap';
 
 import * as io from 'socket.io-client';
 
@@ -44,6 +47,21 @@ export class NotesService {
 		});
 	}
 
+	public instantSearch(term: Observable<string>, debounceMs = 400) {
+		return term
+			.debounceTime(400)
+			.distinctUntilChanged()
+			.switchMap(term => this.rawSearch(term));
+	}
+
+	public rawSearch(term: string): Observable<Array<Note>> {
+		let search = new URLSearchParams();
+		search.set('search', term);
+
+		return this.http.get(this.config.api + this.endpoint + '/' + term, { search })
+			.map(res => res.json());
+	}
+
 	public update(note: Note): Observable<Note> {
 		return this.http.put(this.config.api + this.endpoint + '/' + note.id, note)
 			.map((response: Response) => response.json())
@@ -60,7 +78,7 @@ export class NotesService {
 	}
 
 	public getEditNoteObservable(): Observable<Note> {
-		return  this.editNote$;
+		return this.editNote$;
 	}
 
 	private handleSockets(observer) {
@@ -77,7 +95,7 @@ export class NotesService {
 		});
 
 		this.socket.on('updateNotes', (data) => {
-			for(let i = 0; i < this.notesArray.length; i++) {
+			for (let i = 0; i < this.notesArray.length; i++) {
 				if (this.notesArray[i].id === data.id) {
 					this.notesArray[i] = data;
 					console.log(this.notesArray[i], data);

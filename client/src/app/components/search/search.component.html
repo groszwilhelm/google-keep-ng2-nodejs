@@ -1,0 +1,4 @@
+<div class="wrapper">
+    <input type="text" placeholder="Type to search.." class="search" autocomplete="off" (keyup)="term$.next($event.target.value)">
+</div>
+<notes [setNotes]="notes$"></notes>

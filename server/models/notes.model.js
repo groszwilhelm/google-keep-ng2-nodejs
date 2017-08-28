@@ -54,6 +54,28 @@ function create(note) {
     });
 }
 
+function find(term) {
+    return new Promise(function(resolve, reject) {
+        try{
+            NoteSchema.find({ 'title': { '$regex': term } }, function(err, docs) {
+                if (err) {
+                    resolve({ status: 500, data: { message: 'Some internal server error' } });
+                    console.warn(err);
+                } else {
+                    let notesArray = [];
+                    docs.forEach((note) => {
+                        notesArray.push(new Note(note._id, note.title, note.description, note.color));
+                    })
+                    resolve({ status: 200, data: notesArray })
+                    console.warn(docs);
+                }
+            });
+        } catch(e) {
+            resolve({ status: 500, data: { message: e } });
+        }
+    })
+}
+
 function update(note) {
     return new Promise(function(resolve, reject) {
         try {
@@ -90,6 +112,7 @@ module.exports = {
     Note: Note,
     add: create,
     read: read,
+    findByTerm: find,
     update: update,
     remove: remove
 }

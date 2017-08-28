@@ -86,6 +86,11 @@ router.get('/', function(req, res) {
     handleRequest('read', req.body, res);
 });
 
+router.get('/:term', function(req, res) {
+    console.log(req.params.term);
+    handleRequest('findByTerm', req.params.term, res); 
+});
+
 router.put('/:id', function(req, res) {
     handleRequest('update', req.body, res);
 });

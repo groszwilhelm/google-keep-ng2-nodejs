@@ -1,0 +1,21 @@
+.wrapper {
+    position: relative;
+    width: 600px;
+    margin: auto;
+    margin-top: 80px;
+    text-align: center;
+    overflow: hidden;
+    background-color: rgb(250, 250, 250);
+    box-shadow: 1px 1px 1px rgba(150,150,150,.85);
+}
+
+.search {
+    width: 550px;
+    height: 46px;
+    border: none;
+    margin: 0 auto;
+}
+
+.search:focus {
+    outline: none;
+}

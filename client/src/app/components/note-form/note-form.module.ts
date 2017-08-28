@@ -6,6 +6,8 @@ import { NoteFormComponent } from './note-form.component';
 import { SharedModule } from 'app/shared/shared.module';
 import { NotificationsModule } from 'app/notifications/notifications.module';
 import { ColorPaletteModule } from '../color-palette/color-palette.module';
+import { NoteModule } from '../notes/notes.module';
+import { SearchModule } from '../search/search.module';
 
 @NgModule({
     imports: [
@@ -14,7 +16,9 @@ import { ColorPaletteModule } from '../color-palette/color-palette.module';
         FormsModule,
         ReactiveFormsModule,
         NotificationsModule,
-        ColorPaletteModule
+        ColorPaletteModule,
+        NoteModule,
+        SearchModule
     ],
     exports: [NoteFormComponent],
     declarations: [NoteFormComponent],

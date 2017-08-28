@@ -29,12 +29,6 @@ export class NoteComponent implements OnInit {
             })
     }
 
-    private toggleColorView(): void {
-        this.toggle = !this.toggle;
-        console.log(this.toggle);
-        this.toggle ? this.colorService.open() : this.colorService.close();
-    }
-
     private editNote(note: Note): void {
         this.notesService.editNote$.next(note);
     }
